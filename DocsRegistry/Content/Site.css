@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#date-filter input {
+    margin: 0 5px;
+}
