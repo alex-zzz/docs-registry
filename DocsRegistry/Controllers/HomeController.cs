@@ -11,6 +11,7 @@ using System.Xml;
 using System.Xml.Linq;
 using DocsRegistry.Common;
 using DocsRegistry.Models;
+using System.Xml.Serialization;
 
 namespace DocsRegistry.Controllers
 {
@@ -121,14 +122,22 @@ namespace DocsRegistry.Controllers
                 }
             }
 
-            SoapFormatter formatter = new SoapFormatter();
+            //SoapFormatter formatter = new SoapFormatter();
 
-            var stream1 = GenerateStreamFromString(ServiceResult);
-            Document[] docs = (Document[])formatter.Deserialize(stream1);
+            //var stream1 = GenerateStreamFromString(ServiceResult);
+            //Document[] docs = (Document[])formatter.Deserialize(stream1);
 
-            //XDocument doc = XDocument.Parse(ServiceResult);
+            XDocument doc = XDocument.Parse(ServiceResult);
+            XNamespace ns = "http://www.TestBase.net";
+            var docs = doc.Descendants(ns + "Docs").ToList();
 
-
+            List <Document> documents = new List<Document>();
+            foreach (var item in docs)
+            {
+                StringReader reader = new StringReader(item.ToString());
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Document));
+                documents.Add((Document)xmlSerializer.Deserialize(reader));
+            }
 
             //var q1 = doc.Elements("Docs").ToList();
 
@@ -142,7 +151,7 @@ namespace DocsRegistry.Controllers
             //var hz = items.ToList();
         }
 
-        public static Stream GenerateStreamFromString(string s)
+        public static Stream GenerateStreamFromString(string s) 
         {
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);

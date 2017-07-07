@@ -4,10 +4,13 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Xml.Serialization;
 
 namespace DocsRegistry.Models
 {
-    [Serializable]
+    [Serializable()]
+    [XmlType("Docs")]
+    [XmlRoot(ElementName = "Docs", Namespace = "http://www.TestBase.net")] 
     public class Document
     {
         //public int Id { get; set; }
@@ -23,7 +26,9 @@ namespace DocsRegistry.Models
         public DateTime Date { get; set; }
         public string Number { get; set; }
         public string Comments { get; set; }
+        [XmlElement("Organization")]
         public Organization Organization { get; set; }
+        [XmlElement("Customer")]
         public Customer Customer { get; set; }
     }
 
