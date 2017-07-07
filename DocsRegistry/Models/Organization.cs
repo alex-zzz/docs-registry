@@ -8,7 +8,7 @@ namespace DocsRegistry.Models
 {
     [Serializable()]
     [XmlType("Organization")]
-    [XmlRoot(ElementName = "Organization", Namespace = "http://www.TestBase.net")]
+    [XmlRoot(ElementName = "Organization", Namespace = "http://www.TestBase.net")] 
     public class Organization
     {
         [XmlElement("Name")]

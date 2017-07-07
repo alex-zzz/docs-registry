@@ -151,7 +151,7 @@ namespace DocsRegistry.Controllers
             //var hz = items.ToList();
         }
 
-        public static Stream GenerateStreamFromString(string s)
+        public static Stream GenerateStreamFromString(string s) 
         {
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
