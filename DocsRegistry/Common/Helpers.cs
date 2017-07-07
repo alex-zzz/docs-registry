@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
@@ -24,5 +27,25 @@ namespace DocsRegistry.Common
             serializer.RecursionLimit = recursionDepth;
             return serializer.Serialize(obj);
         }
+
+        public static T SOAPToObject<T>(string SOAP)
+        {
+            if (string.IsNullOrEmpty(SOAP))
+            {
+                throw new ArgumentException("SOAP can not be null/empty");
+            }
+            try
+            {
+                using (MemoryStream Stream = new MemoryStream(UTF8Encoding.UTF8.GetBytes(SOAP)))
+                {
+                    SoapFormatter Formatter = new SoapFormatter();
+                    return (T)Formatter.Deserialize(Stream);
+                }
+            }
+            catch (Exception e)
+            { throw e; }
+        }
     }
+
+
 }
