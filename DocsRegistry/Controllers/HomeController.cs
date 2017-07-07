@@ -117,7 +117,7 @@ namespace DocsRegistry.Controllers
                 {
                     //reading stream    
                     ServiceResult = rd.ReadToEnd();
-                    //writting stream result on console    
+                    //writting stream result on console   
 
                 }
             }

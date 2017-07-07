@@ -10,7 +10,7 @@ namespace DocsRegistry.Models
 {
     [Serializable()]
     [XmlType("Docs")]
-    [XmlRoot(ElementName = "Docs", Namespace = "http://www.TestBase.net")] 
+    [XmlRoot(ElementName = "Docs", Namespace = "http://www.TestBase.net")]
     public class Document
     {
         //public int Id { get; set; }
