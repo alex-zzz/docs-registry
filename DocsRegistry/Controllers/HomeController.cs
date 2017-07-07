@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using DocsRegistry.Common;
 using DocsRegistry.Models;
 using System.Xml.Serialization;
+using DocsRegistry.net.cloudua.lek;
 
 namespace DocsRegistry.Controllers
 {
@@ -82,7 +83,7 @@ namespace DocsRegistry.Controllers
             Req.Accept = "text/xml";
             //HTTP method    
             Req.Method = "POST";
-            
+
             //return HttpWebRequest    
             return Req;
         }
@@ -127,17 +128,27 @@ namespace DocsRegistry.Controllers
             //var stream1 = GenerateStreamFromString(ServiceResult);
             //Document[] docs = (Document[])formatter.Deserialize(stream1);
 
-            XDocument doc = XDocument.Parse(ServiceResult);
-            XNamespace ns = "http://www.TestBase.net";
-            var docs = doc.Descendants(ns + "Docs").ToList();
+            //XDocument doc = XDocument.Parse(ServiceResult);
+            //XNamespace ns = "http://www.TestBase.net";
+            //var docs = doc.Descendants(ns + "Docs").ToList();
 
-            List <Document> documents = new List<Document>();
-            foreach (var item in docs)
-            {
-                StringReader reader = new StringReader(item.ToString());
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Document));
-                documents.Add((Document)xmlSerializer.Deserialize(reader));
-            }
+            //List<Document> documents = new List<Document>();
+            //foreach (var item in docs)
+            //{
+            //    StringReader reader = new StringReader(item.ToString());
+            //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(Document));
+            //    documents.Add((Document)xmlSerializer.Deserialize(reader));
+            //}
+
+
+            var dcs = new Documents();
+            var dsfs = dcs.Url;
+            dcs.Url = "http://lek.cloudua.net:8080/TestBase/ws/Documents.1cws";
+
+
+                var gfg = dcs.GetDocuments(new DateTime(2017,06,01), new DateTime(2017, 06, 30));
+
+            //var fd = Helpers.SOAPToObject<Document>(ServiceResult);
 
             //var q1 = doc.Elements("Docs").ToList();
 
@@ -151,7 +162,7 @@ namespace DocsRegistry.Controllers
             //var hz = items.ToList();
         }
 
-        public static Stream GenerateStreamFromString(string s) 
+        public static Stream GenerateStreamFromString(string s)
         {
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
